@@ -1,0 +1,48 @@
+setwd("D:\\importantbk\\working\\lab_working\\trivial_work\\20160923_counts")
+
+tab <- read.csv(file = "201609.txt", sep = "\t", stringsAsFactor = F)
+
+TBNK <- tab[tab$医嘱名 == "全血免疫功能检测" | tab$医嘱名 == "全血T细胞亚群检测",]
+
+Treg <- tab[tab$医嘱名 == "全血调节性T细胞检测", ]
+
+NK <- tab[tab$医嘱名 == "全血NK细胞检测", ]
+
+tongji1 <- c("201609", "201608","201607","201606","201605","201604","201603","201602","201601","201512","201511","201510","201509","201508")
+
+tongji2 <- c("201507","201506","201505","201504","201503","201502","201501","201412","201411","201410","201409","201408","201407","201406","201405","201404","201403","201402","201401","201312","201311","201310","201309")
+
+
+type <- c("肺癌","胃癌","食管癌","肠癌","宫颈癌","肝癌","鼻咽癌","乳腺癌","胰腺癌","其他")
+
+for (i in 1:length(tongji1)){
+  tabi <- read.csv(file = paste(tongji1[i],".txt",sep=""), sep = "\t", stringsAsFactor = F)
+  TBNK <- tabi[tabi$医嘱名 == "全血免疫功能检测" | tabi$医嘱名 == "全血T细胞亚群检测",]
+##  Treg <- tabi[tabi$医嘱名 == "全血调节性T细胞检测", ]
+##  NK <- tabi[tabi$医嘱名 == "全血NK细胞检测", ]
+  for (i in 1:length(tongji1)){
+    assign(paste("c",tongji1[i],sep = ""), c(length(grep("肺",TBNK$临床诊断)),length(grep("胃",TBNK$临床诊断)),length(grep("食",TBNK$临床诊断)),length(grep("肠",TBNK$临床诊断)),length(grep("宫颈",TBNK$临床诊断)),length(grep("肝",TBNK$临床诊断)),length(grep("鼻",TBNK$临床诊断)),length(grep("乳腺",TBNK$临床诊断)),length(grep("胰腺",TBNK$临床诊断)), length(TBNK$临床诊断)-length(grep("肺",TBNK$临床诊断))-length(grep("胃",TBNK$临床诊断))-length(grep("食",TBNK$临床诊断))-length(grep("肠",TBNK$临床诊断))-length(grep("宫颈",TBNK$临床诊断))-length(grep("肝",TBNK$临床诊断))-length(grep("鼻",TBNK$临床诊断))-length(grep("乳腺",TBNK$临床诊断))-length(grep("胰腺",TBNK$临床诊断))))
+  }
+  TBNK1 <- cbind(TBNK1,eval(paste("c",tongji1[i],sep = "")))
+}
+
+
+
+
+##########################################################################################################
+##caution: the name of variable can not start with a number, such as 201508_counts
+##########################################################################################################
+for (i in 1:length(tongji1)){
+  assign(paste("c",tongji1[i],sep = ""), i*1000)
+}
+
+
+
+TBNK1 <- 
+Treg1 <- 
+NK1 <-
+
+
+TBNK2 <- 
+Treg2 <- 
+NK2 <- 
