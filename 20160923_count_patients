@@ -12,19 +12,95 @@ tongji1 <- c("201609", "201608","201607","201606","201605","201604","201603","20
 
 tongji2 <- c("201507","201506","201505","201504","201503","201502","201501","201412","201411","201410","201409","201408","201407","201406","201405","201404","201403","201402","201401","201312","201311","201310","201309")
 
+################################
+##1
+################################
 
-type <- c("肺癌","胃癌","食管癌","肠癌","宫颈癌","肝癌","鼻咽癌","乳腺癌","胰腺癌","其他")
+TBNK1 <- cbind(c("肺癌","胃癌","食管癌","肠癌","宫颈癌","肝癌","鼻咽癌","乳腺癌","胰腺癌","其他"))
 
 for (i in 1:length(tongji1)){
   tabi <- read.csv(file = paste(tongji1[i],".txt",sep=""), sep = "\t", stringsAsFactor = F)
   TBNK <- tabi[tabi$医嘱名 == "全血免疫功能检测" | tabi$医嘱名 == "全血T细胞亚群检测",]
 ##  Treg <- tabi[tabi$医嘱名 == "全血调节性T细胞检测", ]
 ##  NK <- tabi[tabi$医嘱名 == "全血NK细胞检测", ]
-  for (i in 1:length(tongji1)){
-    assign(paste("c",tongji1[i],sep = ""), c(length(grep("肺",TBNK$临床诊断)),length(grep("胃",TBNK$临床诊断)),length(grep("食",TBNK$临床诊断)),length(grep("肠",TBNK$临床诊断)),length(grep("宫颈",TBNK$临床诊断)),length(grep("肝",TBNK$临床诊断)),length(grep("鼻",TBNK$临床诊断)),length(grep("乳腺",TBNK$临床诊断)),length(grep("胰腺",TBNK$临床诊断)), length(TBNK$临床诊断)-length(grep("肺",TBNK$临床诊断))-length(grep("胃",TBNK$临床诊断))-length(grep("食",TBNK$临床诊断))-length(grep("肠",TBNK$临床诊断))-length(grep("宫颈",TBNK$临床诊断))-length(grep("肝",TBNK$临床诊断))-length(grep("鼻",TBNK$临床诊断))-length(grep("乳腺",TBNK$临床诊断))-length(grep("胰腺",TBNK$临床诊断))))
-  }
-  TBNK1 <- cbind(TBNK1,eval(paste("c",tongji1[i],sep = "")))
+  assign(paste("c",tongji1[i],sep = "_"), c(length(grep("肺",TBNK$临床诊断)),length(grep("胃",TBNK$临床诊断)),length(grep("食",TBNK$临床诊断)),length(grep("肠",TBNK$临床诊断)),length(grep("宫颈",TBNK$临床诊断)),length(grep("肝",TBNK$临床诊断)),length(grep("鼻",TBNK$临床诊断)),length(grep("乳腺",TBNK$临床诊断)),length(grep("胰腺",TBNK$临床诊断)), length(TBNK$临床诊断)-length(grep("肺",TBNK$临床诊断))-length(grep("胃",TBNK$临床诊断))-length(grep("食",TBNK$临床诊断))-length(grep("肠",TBNK$临床诊断))-length(grep("宫颈",TBNK$临床诊断))-length(grep("肝",TBNK$临床诊断))-length(grep("鼻",TBNK$临床诊断))-length(grep("乳腺",TBNK$临床诊断))-length(grep("胰腺",TBNK$临床诊断))))
+  TBNK1 <- cbind(TBNK1,eval(parse(text = paste("c",tongji1[i],sep = "_"))))
 }
+
+Treg1 <- cbind(c("肺癌","胃癌","食管癌","肠癌","宫颈癌","肝癌","鼻咽癌","乳腺癌","胰腺癌","其他"))
+
+for (i in 1:length(tongji1)){
+  tabi <- read.csv(file = paste(tongji1[i],".txt",sep=""), sep = "\t", stringsAsFactor = F)
+##  TBNK <- tabi[tabi$医嘱名 == "全血免疫功能检测" | tabi$医嘱名 == "全血T细胞亚群检测",]
+  Treg <- tabi[tabi$医嘱名 == "全血调节性T细胞检测", ]
+##  NK <- tabi[tabi$医嘱名 == "全血NK细胞检测", ]
+  assign(paste("c",tongji1[i],sep = "_"), c(length(grep("肺",Treg$临床诊断)),length(grep("胃",Treg$临床诊断)),length(grep("食",Treg$临床诊断)),length(grep("肠",Treg$临床诊断)),length(grep("宫颈",Treg$临床诊断)),length(grep("肝",Treg$临床诊断)),length(grep("鼻",Treg$临床诊断)),length(grep("乳腺",Treg$临床诊断)),length(grep("胰腺",Treg$临床诊断)), length(Treg$临床诊断)-length(grep("肺",Treg$临床诊断))-length(grep("胃",Treg$临床诊断))-length(grep("食",Treg$临床诊断))-length(grep("肠",Treg$临床诊断))-length(grep("宫颈",Treg$临床诊断))-length(grep("肝",Treg$临床诊断))-length(grep("鼻",Treg$临床诊断))-length(grep("乳腺",Treg$临床诊断))-length(grep("胰腺",Treg$临床诊断))))
+  Treg1 <- cbind(Treg1,eval(parse(text = paste("c",tongji1[i],sep = "_"))))
+}
+
+
+NK1 <- cbind(c("肺癌","胃癌","食管癌","肠癌","宫颈癌","肝癌","鼻咽癌","乳腺癌","胰腺癌","其他"))
+
+for (i in 1:length(tongji1)){
+  tabi <- read.csv(file = paste(tongji1[i],".txt",sep=""), sep = "\t", stringsAsFactor = F)
+##  TBNK <- tabi[tabi$医嘱名 == "全血免疫功能检测" | tabi$医嘱名 == "全血T细胞亚群检测",]
+##  Treg <- tabi[tabi$医嘱名 == "全血调节性T细胞检测", ]
+  NK <- tabi[tabi$医嘱名 == "全血NK细胞检测", ]
+  assign(paste("c",tongji1[i],sep = "_"), c(length(grep("肺",NK$临床诊断)),length(grep("胃",NK$临床诊断)),length(grep("食",NK$临床诊断)),length(grep("肠",NK$临床诊断)),length(grep("宫颈",NK$临床诊断)),length(grep("肝",NK$临床诊断)),length(grep("鼻",NK$临床诊断)),length(grep("乳腺",NK$临床诊断)),length(grep("胰腺",NK$临床诊断)), length(NK$临床诊断)-length(grep("肺",NK$临床诊断))-length(grep("胃",NK$临床诊断))-length(grep("食",NK$临床诊断))-length(grep("肠",NK$临床诊断))-length(grep("宫颈",NK$临床诊断))-length(grep("肝",NK$临床诊断))-length(grep("鼻",NK$临床诊断))-length(grep("乳腺",NK$临床诊断))-length(grep("胰腺",NK$临床诊断))))
+  NK1 <- cbind(NK1,eval(parse(text = paste("c",tongji1[i],sep = "_"))))
+}
+
+write.table(TBNK1, file = "TBNK1.txt", sep = "\t", col.names = F, row.names = F, quote = F)
+
+write.table(Treg1, file = "Treg1.txt", sep = "\t", col.names = F, row.names = F, quote = F)
+
+write.table(NK1, file = "NK1.txt", sep = "\t", col.names = F, row.names = F, quote = F)
+
+
+
+
+################################
+##2
+################################
+TBNK2 <- cbind(c("肺癌","胃癌","食管癌","肠癌","宫颈癌","肝癌","鼻咽癌","乳腺癌","胰腺癌","其他"))
+
+for (i in 1:length(tongji2)){
+  tabi <- read.csv(file = paste(tongji2[i],".txt",sep=""), sep = "\t", stringsAsFactor = F, header = F)
+  TBNK <- tabi[tabi$V7 == "全血免疫功能检测" | tabi$V7 == "全血T细胞亚群检测",]
+##  Treg <- tabi[tabi$医嘱名 == "全血调节性T细胞检测", ]
+##  NK <- tabi[tabi$医嘱名 == "全血NK细胞检测", ]
+  assign(paste("c",tongji2[i],sep = "_"), c(length(grep("肺",TBNK$V15)),length(grep("胃",TBNK$V15)),length(grep("食",TBNK$V15)),length(grep("肠",TBNK$V15)),length(grep("宫颈",TBNK$V15)),length(grep("肝",TBNK$V15)),length(grep("鼻",TBNK$V15)),length(grep("乳腺",TBNK$V15)),length(grep("胰腺",TBNK$V15)), length(TBNK$V15)-length(grep("肺",TBNK$V15))-length(grep("胃",TBNK$V15))-length(grep("食",TBNK$V15))-length(grep("肠",TBNK$V15))-length(grep("宫颈",TBNK$V15))-length(grep("肝",TBNK$V15))-length(grep("鼻",TBNK$V15))-length(grep("乳腺",TBNK$V15))-length(grep("胰腺",TBNK$V15))))
+  TBNK2 <- cbind(TBNK2,eval(parse(text = paste("c",tongji2[i],sep = "_"))))
+}
+
+Treg2 <- cbind(c("肺癌","胃癌","食管癌","肠癌","宫颈癌","肝癌","鼻咽癌","乳腺癌","胰腺癌","其他"))
+
+for (i in 1:length(tongji2)){
+  tabi <- read.csv(file = paste(tongji2[i],".txt",sep=""), sep = "\t", stringsAsFactor = F, header = F)
+##  TBNK <- tabi[tabi$医嘱名 == "全血免疫功能检测" | tabi$医嘱名 == "全血T细胞亚群检测",]
+  Treg <- tabi[tabi$V7 == "全血调节性T细胞检测", ]
+##  NK <- tabi[tabi$医嘱名 == "全血NK细胞检测", ]
+  assign(paste("c",tongji2[i],sep = "_"), c(length(grep("肺",Treg$V15)),length(grep("胃",Treg$V15)),length(grep("食",Treg$V15)),length(grep("肠",Treg$V15)),length(grep("宫颈",Treg$V15)),length(grep("肝",Treg$V15)),length(grep("鼻",Treg$V15)),length(grep("乳腺",Treg$V15)),length(grep("胰腺",Treg$V15)), length(Treg$V15)-length(grep("肺",Treg$V15))-length(grep("胃",Treg$V15))-length(grep("食",Treg$V15))-length(grep("肠",Treg$V15))-length(grep("宫颈",Treg$V15))-length(grep("肝",Treg$V15))-length(grep("鼻",Treg$V15))-length(grep("乳腺",Treg$V15))-length(grep("胰腺",Treg$V15))))
+  Treg2 <- cbind(Treg2,eval(parse(text = paste("c",tongji2[i],sep = "_"))))
+}
+
+
+NK2 <- cbind(c("肺癌","胃癌","食管癌","肠癌","宫颈癌","肝癌","鼻咽癌","乳腺癌","胰腺癌","其他"))
+
+for (i in 1:length(tongji2)){
+  tabi <- read.csv(file = paste(tongji2[i],".txt",sep=""), sep = "\t", stringsAsFactor = F, header = F)
+##  TBNK <- tabi[tabi$医嘱名 == "全血免疫功能检测" | tabi$医嘱名 == "全血T细胞亚群检测",]
+##  Treg <- tabi[tabi$医嘱名 == "全血调节性T细胞检测", ]
+  NK <- tabi[tabi$V7 == "全血NK细胞检测", ]
+  assign(paste("c",tongji2[i],sep = "_"), c(length(grep("肺",NK$V15)),length(grep("胃",NK$V15)),length(grep("食",NK$V15)),length(grep("肠",NK$V15)),length(grep("宫颈",NK$V15)),length(grep("肝",NK$V15)),length(grep("鼻",NK$V15)),length(grep("乳腺",NK$V15)),length(grep("胰腺",NK$V15)), length(NK$V15)-length(grep("肺",NK$V15))-length(grep("胃",NK$V15))-length(grep("食",NK$V15))-length(grep("肠",NK$V15))-length(grep("宫颈",NK$V15))-length(grep("肝",NK$V15))-length(grep("鼻",NK$V15))-length(grep("乳腺",NK$V15))-length(grep("胰腺",NK$V15))))
+  NK2 <- cbind(NK2,eval(parse(text = paste("c",tongji2[i],sep = "_"))))
+}
+
+write.table(TBNK2, file = "TBNK2.txt", sep = "\t", col.names = F, row.names = F, quote = F)
+
+write.table(Treg2, file = "Treg2.txt", sep = "\t", col.names = F, row.names = F, quote = F)
+
+write.table(NK2, file = "NK2.txt", sep = "\t", col.names = F, row.names = F, quote = F)
 
 
 
@@ -36,13 +112,6 @@ for (i in 1:length(tongji1)){
   assign(paste("c",tongji1[i],sep = ""), i*1000)
 }
 
-
-
-TBNK1 <- 
-Treg1 <- 
-NK1 <-
-
-
-TBNK2 <- 
-Treg2 <- 
-NK2 <- 
+##########################################################################################################
+##caution:  use eval(parse(text = expression)) to convert the variable name to its value for calculation
+##########################################################################################################
