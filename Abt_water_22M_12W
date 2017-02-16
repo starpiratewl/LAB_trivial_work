@@ -35,6 +35,11 @@ up_mw_exp <- mw_up_exp[mw_up_exp$gene.name %in% up_all_genes,]$log2FC
 
 
 
+M1_list <- c("Cd80","Cd86","Tlr2","Tlr4","Ccl2","Ccl3","Ccl4","Ccl5","Ccl8","Ccl9","Ccl11","Cx3cl1","Cxcl5","Cxcl9","Cxcl10","Cxcl11","Cxcl16","Il1b","Il12a","Il15","Il18","Il23a","Ifng","TNFa","Il1r1","Ido2","Stat1","Nos2")
+
+M2_list <- c("Cd163","Tlr1","Tlr8","Ccl1","Ccl17","Ccl22","Ccl24","Cxcl13","Il4","Il6","Il10","Il13","Tgfb3","Il1r2","Il1rn","Arg1","Igf1","Retnla","Mrc1","Msr1","Chi3l3","Chi3l4","Tgm2","Clec7a","Amac1")
+
+
 
 
 
