@@ -1,0 +1,44 @@
+setwd("D:\\importantbk\\working\\lab_working\\sequencing\\analysis")
+
+aw_exp <- read.csv(file = "Abt_VS_Water_fc2.txt", sep = "\t", stringsAsFactor = F)
+
+mw_down_exp <- read.csv(file = "22M_12W_down.txt", sep = "\t", stringsAsFactor = F)
+
+mw_up_exp <- read.csv(file = "22M_12W_up.txt", sep = "\t", stringsAsFactor = F)
+
+aw_exp_c <- aw_exp[aw_exp$GeneSymbol != "<NA>",]
+aw_exp_c <- aw_exp_c[!is.na(aw_exp_c$GeneSymbol),]
+
+
+
+aw_exp_up <- aw_exp_c[aw_exp_c$foldchange > 1, ]
+
+aw_exp_down <- aw_exp_c[aw_exp_c$foldchange < 1, ]
+
+aw_up_genes <- unique(aw_exp_up$GeneSymbol)
+
+aw_down_genes <- unique(aw_exp_down$GeneSymbol)
+
+mw_up_genes <- mw_up_exp$gene.name
+
+mw_down_genes <- mw_down_exp$gene.name
+
+up_all_genes <- intersect(aw_up_genes, mw_up_genes)
+
+down_all_genes <- intersect(aw_down_genes, mw_down_genes)
+
+
+up_aw_exp <- aw_exp_up[aw_exp_up$GeneSymbol %in% up_all_genes,]$foldchange
+up_mw_exp <- mw_up_exp[mw_up_exp$gene.name %in% up_all_genes,]$log2FC
+
+
+
+
+
+
+
+
+
+
+
+
