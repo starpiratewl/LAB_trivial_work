@@ -1,9 +1,7 @@
 setwd("D:\\importantbk\\working\\lab_working\\sequencing\\analysis")
 
 aw_exp <- read.csv(file = "Abt_VS_Water_fc2.txt", sep = "\t", stringsAsFactor = F)
-
 mw_down_exp <- read.csv(file = "22M_12W_down.txt", sep = "\t", stringsAsFactor = F)
-
 mw_up_exp <- read.csv(file = "22M_12W_up.txt", sep = "\t", stringsAsFactor = F)
 
 aw_exp_c <- aw_exp[aw_exp$GeneSymbol != "<NA>",]
@@ -28,22 +26,83 @@ up_all_genes <- intersect(aw_up_genes, mw_up_genes)
 down_all_genes <- intersect(aw_down_genes, mw_down_genes)
 
 
-up_aw_exp <- aw_exp_up[aw_exp_up$GeneSymbol %in% up_all_genes,]$foldchange
-up_mw_exp <- mw_up_exp[mw_up_exp$gene.name %in% up_all_genes,]$log2FC
+up_aw_exp <- aw_exp_up[aw_exp_up$GeneSymbol %in% up_all_genes,]
+
+test <- tapply(up_aw_exp$foldchange,up_aw_exp$GeneSymbol, mean)
+
+up_mw_exp <- mw_up_exp[mw_up_exp$gene.name %in% up_all_genes,]
+
+final_tab <- up_mw_exp[,c(2,13)]
+final_tab <- final_tab[order(final_tab$gene.name),]
+final_tab <- cbind(final_tab, test)
+names(final_tab) <- c("GeneSymbol","s22M_12W","Abt_Water")
+final_tab$s22Mvs12W <- 2^final_tab$s22M_12W
+final_tab <- final_tab[,-2]
+write.table(final_tab, file = "up_regulated_genes.txt", col.names = T, row.names = F, quote = F, sep = "\t")
+
+
+
+down_aw_exp <- aw_exp_down[aw_exp_down$GeneSymbol %in% down_all_genes,]
+
+test <- tapply(down_aw_exp$foldchange,down_aw_exp$GeneSymbol, mean)
+
+down_mw_exp <- mw_down_exp[mw_down_exp$gene.name %in% down_all_genes, ]
+
+
+final_tab <- down_mw_exp[,c(2,13)]
+final_tab <- final_tab[order(final_tab$gene.name),]
+final_tab <- cbind(final_tab, test)
+names(final_tab) <- c("GeneSymbol","s22M_12W","Abt_Water")
+final_tab$s22Mvs12W <- 2^as.numeric(final_tab$s22M_12W)
+final_tab <- final_tab[,-2]
+write.table(final_tab, file = "down_regulated_genes.txt", col.names = T, row.names = F, quote = F, sep = "\t")
 
 
 
 
 
+
+##################################################
 M1_list <- c("Cd80","Cd86","Tlr2","Tlr4","Ccl2","Ccl3","Ccl4","Ccl5","Ccl8","Ccl9","Ccl11","Cx3cl1","Cxcl5","Cxcl9","Cxcl10","Cxcl11","Cxcl16","Il1b","Il12a","Il15","Il18","Il23a","Ifng","TNFa","Il1r1","Ido2","Stat1","Nos2")
 
 M2_list <- c("Cd163","Tlr1","Tlr8","Ccl1","Ccl17","Ccl22","Ccl24","Cxcl13","Il4","Il6","Il10","Il13","Tgfb3","Il1r2","Il1rn","Arg1","Igf1","Retnla","Mrc1","Msr1","Chi3l3","Chi3l4","Tgm2","Clec7a","Amac1")
 
 
+mw_all <- read.csv(file = "mw_all.txt", sep = "\t", stringsAsFactor = F)
+aw_all <- read.csv(file = "Abt_VS_Water.txt", sep = "\t", stringsAsFactor = F)
+m1_mw <- mw_all[mw_all$gene.name %in% M1_list, ]
+m1_aw <- aw_all[aw_all$GeneSymbol %in% M1_list, ]
+
+test <- tapply(m1_aw$foldchange, m1_aw$GeneSymbol, mean)
+
+
+final_tab <- m1_mw[,c(2,13)]
+final_tab <- final_tab[order(final_tab$gene.name),]
+final_tab <- cbind(final_tab, test)
+names(final_tab) <- c("GeneSymbol","s22M_12W","Abt_Water")
+final_tab$s22Mvs12W <- 2^as.numeric(final_tab$s22M_12W)
+final_tab <- final_tab[,-2]
+write.table(final_tab, file = "M1_genes.txt", col.names = T, row.names = F, quote = F, sep = "\t")
 
 
 
 
+m2_mw <- mw_all[mw_all$gene.name %in% M2_list, ]
+m2_aw <- aw_all[aw_all$GeneSymbol %in% M2_list, ]
+
+test <- tapply(m2_aw$foldchange, m2_aw$GeneSymbol, mean)
 
 
+m2_mw_final <- m2_mw[,c(2,13)]
+m2_mw_final$foldchage <- 2^as.numeric(m2_mw_final$log2FC)
+m2_mw_final <- m2_mw_final[,-2]
+
+final_tab <- cbind(names(test), test)
+row.names(final_tab) <- NULL
+colnames(final_tab) <- c("GeneSymbol", "Abt_Water")
+final_tab <- as.data.frame(final_tab)
+
+haha <- merge(m2_mw_final, final_tab, all = T, by.x = "gene.name", by.y = "GeneSymbol")
+names(haha) <- c("GeneSymbol", "22M_12W", "Abt_Water")
+write.table(haha, file = "M2_genes.txt", col.names = T, row.names = F, sep = "\t", quote = F)
 
