@@ -150,6 +150,32 @@ write.table(tab246, file = "246_exptab.txt", sep = "\t", col.names = T, row.name
 
 
 
+###############################3
+##   z test   out3NA
+
+
+
+setwd("D:\\importantbk\\working\\lab_working\\biochip_overall\\work_for_article\\FDR")
+
+overall <- read.csv(file = "Abt_VS_Water_clean_out3NA.txt", sep = "\t", stringsAsFactors = T)
+
+overalltab <- overall[,c(1,2,3,6,7,10,11,15)]
+
+
+overalltab$zscore <- (overalltab$fcadjust - mean(overalltab$fcadjust))/sd(overalltab$fcadjust)
+
+write.table(overalltab, file = "overall_tab_out3NA.txt", sep = "\t", col.names = T, row.names = F, quote = F)
+
+
+
+genelist246tab <- read.csv(file = "246.txt", sep = "\t", stringsAsFactors = F)
+
+genelist245 <- genelist246tab$GeneSymbol
+
+tab246 <- overalltab[overalltab$GeneSymbol %in% genelist245, ]
+
+write.table(tab246, file = "246_exptabout3NA.txt", sep = "\t", col.names = T, row.names = F, quote = F)
+
 
 
 
