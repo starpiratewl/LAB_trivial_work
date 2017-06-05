@@ -52,28 +52,107 @@ p.adjust(p_filteredn$p.value, method = "fdr", n = length(p_filteredn$p.value))
 
 
 
-ps<-as.numeric(levels(p_tab1$p.value)[p_tab1$p.value])
-fc<-as.numeric(p_tab[,2])
 
-cs <- rep( "black", length(ps) )
-cs[ fc > 2 & ps < 0.05 ] <- "red"
-cs[ fc < 0.5 & ps < 0.05 ] <- "green"
 
-# plot
-pdf(paste(x,"_volcano_M.pdf",sep=""))
-par(cex.axis=1.2, cex.lab=1.2)
-plot(log2(fc), -log10(ps), col=cs, pch=19, xlim=c(-5,5),cex=0.7,cex.axis=2,font.axis=2,
-     xlab="log2(fc)", ylab="-log10(p-value)", xaxt="n")
+setwd("D:\\importantbk\\working\\lab_working\\biochip_overall\\work_for_article\\FDR")
 
-axis(side=1, at=-5:5,cex.axis =2,font.axis=2)
+ltab <- read.csv(file = "246.txt", sep = "\t", stringsAsFactor = F)
 
-abline(h=-log10(0.05), col="purple")
-abline(v=c(-log2(2),log2(2)), col="purple")
+genelist <- ltab$GeneSymbol
 
-text(3.8, -log10(0.05), "p-value=0.05", pos=3, cex = 1.5, font =2)
-##text(-log2(1.5), 6, "ratio=0.67", srt=90, pos=3)
-t##ext( log2(1.5), 6, "ratio=1.5", srt=90, pos=3)
+tab <- read.csv(file = "Abt_VS_Water_fc2.txt", sep = "\t", stringsAsFactor = F)
 
-title(paste(x,"_Volcano_Plot",sep=""))
+exptab <- tab[tab$GeneSymbol %in% genelist,]
 
-dev.off()
+write.table(exptab, file = "exptabduoyu246.txt", sep = "\t", row.names = F, col.names = T, quote = F)
+
+
+tab246 <- read.csv(file= "exptab246.txt", sep = "\t", stringsAsFactors = F)
+
+
+
+
+
+tab <- tab246[,c(1,2,3,6,7,10,14)]
+
+
+need_pvalue1 <- function(x) {
+  test <- t.test(x[1:2],x[3:4],var.equal =F)
+  return(test$p.value)
+}
+
+##apply(head(tab)[,2:5],1,need_pvalue1)
+
+p_result <- apply(tab[,2:5],1,need_pvalue1)
+
+p_tab <- cbind(p_result,tab$foldchange,tab$ProbeName, tab$GeneSymbol)
+
+
+colnames(p_tab) <- c("p.value", "foldchange", "ProbeName", "GeneSymbol")
+
+p_tab1 <- as.data.frame(p_tab)
+
+##
+p_tab1$p.value <- as.numeric(as.character(p_tab1$p.value))
+
+p_tab1$FDR <- p.adjust(p_tab1$p.value, method = "fdr", n = length(p_tab1$p.value))
+
+
+write.table(p_tab1, file = "fdr_F.txt",row.names = F, col.names = T, quote = F, sep = "\t")
+
+
+
+p.adjust(p_tab1$p.value, method = "fdr", n = length(p_tab1$p.value))
+
+
+
+
+
+
+
+###############################3
+##   z test
+
+
+
+setwd("D:\\importantbk\\working\\lab_working\\biochip_overall\\work_for_article\\FDR")
+
+overall <- read.csv(file = "Abt_VS_Water_clean.txt", sep = "\t", stringsAsFactors = T)
+
+overalltab <- overall[,c(1,2,3,6,7,10,14)]
+
+overalltab$fcadjust <- overalltab$foldchange
+
+for (i in 1:length(overalltab$fcadjust)){
+  if(overalltab[i,6] < 1){
+    overalltab[i,8] <- -1/overalltab[i,6]
+  }
+  else{
+    overalltab[i,8] <- overalltab[i,6]
+  }
+}
+
+
+overalltab$zscore <- (overalltab$fcadjust - mean(overalltab$fcadjust))/sd(overalltab$fcadjust)
+
+write.table(overalltab, file = "overall_tab.txt", sep = "\t", col.names = T, row.names = F, quote = F)
+
+
+
+genelist246tab <- read.csv(file = "246.txt", sep = "\t", stringsAsFactors = F)
+
+genelist245 <- genelist246tab$GeneSymbol
+
+tab246 <- overalltab[overalltab$GeneSymbol %in% genelist245, ]
+
+write.table(tab246, file = "246_exptab.txt", sep = "\t", col.names = T, row.names = F, quote = F)
+
+
+
+
+
+
+
+
+
+
