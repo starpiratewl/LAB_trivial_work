@@ -182,3 +182,56 @@ write.table(tab246, file = "246_exptabout3NA.txt", sep = "\t", col.names = T, ro
 
 
 
+################################################
+##   overall table clear up
+
+
+
+setwd("D:\\importantbk\\working\\lab_working\\biochip_overall\\work_for_article\\FDR")
+
+overall <- read.csv(file = "Abt_VS_Water_clean.txt", sep = "\t", stringsAsFactors = T)
+
+overtab <- overall[, c(1,2,3,4,5,6,7,8,9,10,11,15)]
+
+regene <- table(overtab$GeneSymbol)
+
+regene <- regene[regene >= 2]
+
+
+overtab$GeneSymbol <- as.character(overtab$GeneSymbol)
+
+regenetab <- overtab[overtab$GeneSymbol %in% names(regene), ]
+
+length(table(regenetab$GeneSymbol))
+##[1] 6834
+length(regene)
+##[1] 6834
+
+
+table(regene)
+##regene
+##   2    3    4    5    6    7    8 
+##5306 1227  239   41   12    6    3 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
