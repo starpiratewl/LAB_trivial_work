@@ -253,7 +253,9 @@ testtab <- testtab[,-13]
 lasttab <- rbind(keeptab, testtab)
 
 
+lasttab$zscores <- (lasttab$fcadjust - mean(lasttab$fcadjust))/sd(lasttab$fcadjust)
 
+write.table(lasttab, file = "nonre_tab.txt", sep = "\t", row.names = F, col.names = T, quote = F)
 
 
 ##srottab <- regenetab[order(regenetab$GeneSymbol),]
