@@ -214,6 +214,96 @@ table(regene)
 ##5306 1227  239   41   12    6    3 
 
 
+regenetab$Abt_1_flags <- as.character(regenetab$Abt_1_flags)
+regenetab$Abt_2_flags <- as.character(regenetab$Abt_2_flags)
+regenetab$Water_1_flags <- as.character(regenetab$Water_1_flags)
+regenetab$Water_2_flags <- as.character(regenetab$Water_2_flags)
+
+regenelist <- names(regene)
+
+
+regenetab$Pnum <- rep(0, length(regenetab$ProbeName)) 
+for(i in 1:length(regenetab$ProbeName)){
+  regenetab$Pnum[i] <- sum(regenetab[i,c(4,5,8,9)] == "P") 
+}
+
+
+
+cutnumber <- as.numeric(row.names(regenetab))
+keeptab <- overtab[-cutnumber,]
+
+
+
+
+regenetab$scores <- rep(0, length(regenetab$ProbeName)) 
+
+testtab <- regenetab
+
+for (i in regenelist){
+	if (min(testtab[testtab$GeneSymbol == i, ]$fcadjust) > 0) {testtab <- testtab[-c(which(testtab$GeneSymbol == i)[which(testtab[which(testtab$GeneSymbol == i),]$fcadjust != max(testtab[which(testtab$GeneSymbol == i),]$fcadjust))]),]} else 
+	 {testtab <- testtab[-c(which(testtab$GeneSymbol == i)[which(abs(testtab[which(testtab$GeneSymbol == i),]$fcadjust) != max(abs(testtab[which(testtab$GeneSymbol == i),]$fcadjust)))])
+,]}
+}
+
+
+testtab <- testtab[,-13]
+
+
+
+lasttab <- rbind(keeptab, testtab)
+
+
+
+
+
+##srottab <- regenetab[order(regenetab$GeneSymbol),]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
