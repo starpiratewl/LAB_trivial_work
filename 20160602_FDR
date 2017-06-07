@@ -258,6 +258,26 @@ lasttab$zscores <- (lasttab$fcadjust - mean(lasttab$fcadjust))/sd(lasttab$fcadju
 write.table(lasttab, file = "nonre_tab.txt", sep = "\t", row.names = F, col.names = T, quote = F)
 
 
+
+ltab <- read.csv(file = "246.txt", sep = "\t", stringsAsFactor = F)
+
+genelist <- ltab$GeneSymbol
+
+tab246 <- lasttab[lasttab$GeneSymbol %in% genelist,]
+
+write.table(tab246, file = "246tab_non.txt", sep = "\t", col.names = T, row.names = F, quote = F)
+
+
+
+
+
+
+
+
+
+
+
+
 ##srottab <- regenetab[order(regenetab$GeneSymbol),]
 
 
