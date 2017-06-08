@@ -269,14 +269,16 @@ write.table(tab246, file = "246tab_non.txt", sep = "\t", col.names = T, row.name
 
 
 
+fdrtab <- read.csv(file = "246_exptab.txt", sep = "\t", header = T, stringsAsFactor = F)
+supplelist <- read.csv(file = "supplement_tab.txt", sep = "\t", header = F, stringsAsFactor = F)$V1
 
+pnorm(0.95, mean = 0, sd = 1)
 
+fdrtab$GeneSymbol <- toupper(fdrtab$GeneSymbol)
 
+suppletab <- fdrtab[fdrtab$GeneSymbol %in% supplelist,]
 
-
-
-
-
+write.table(suppletab[,c(7,8,11)], file = "geichenwen.txt", sep = "\t", col.names = T, row.names = F, quote = F)
 
 ##srottab <- regenetab[order(regenetab$GeneSymbol),]
 
