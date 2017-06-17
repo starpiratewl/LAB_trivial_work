@@ -28,11 +28,29 @@ p_tab1$p.value <- as.numeric(as.character(p_tab1$p.value))
 
 
 
+##
+ltab <- read.csv(file = "246.txt", sep = "\t", stringsAsFactor = F)
+
+genelist <- ltab$GeneSymbol
+
+tab246 <- p_tab1[p_tab1$GeneSymbol %in% genelist,]
+
+write.table(tab246, file = "246tab_ttest.txt", sep = "\t", col.names = T, row.names = F, quote = F)
+
+
+##
+
+
+
+
+
 p_filtered <- p_tab1[p_tab1$p.value < 0.05, ]
 p_filteredn <- p_filtered[!is.na(p_filtered$GeneSymol),]
 
 write.table(p_filteredn, file = "fdr.txt",row.names = F, col.names = T, quote = F, sep = "\t")
 
+
+write.table(p_tab1, file = "fdr_all.txt",row.names = F, col.names = T, quote = F, sep = "\t")
 
 
 p.adjust(p_filteredn$p.value, method = "fdr", n = length(p_filteredn$p.value))
