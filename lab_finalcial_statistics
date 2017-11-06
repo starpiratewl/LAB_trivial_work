@@ -24,6 +24,14 @@ for (i in 1:length(order_list)){
   xiangx_tab[i,11] <- xx_tab[xx_tab$病人登记号 == order_list[i],]$时间[1]
 }
 
+xiangx_tab <- as.data.frame(xiangx_tab)
+xiangx_tab <- xiangx_tab[-123, ]
+xiangx_tab$order_list <- as.numeric(as.character(xiangx_tab$order_list))
+xiangx_tab$department <- as.character(xiangx_tab$department)
+xiangx_tab$doctor_in <- as.character(xiangx_tab$doctor_in)
+xiangx_tab$price <- as.numeric(as.character(xiangx_tab$price))
+xiangx_tab$clinical_term <- as.character(xiangx_tab$clinical_term)
+xiangx_tab$date <- as.character(xiangx_tab$date)
 
 
 
@@ -55,6 +63,45 @@ tianchong <- rep(NA, dim(all_tab_sort)[1])
 all_tab_sort <- cbind(all_tab_sort, tianchong,tianchong,tianchong,tianchong,tianchong,tianchong,tianchong,tianchong,tianchong)
 
 colnames(all_tab_sort) <- c("bingli_order","name","gender","age","order_list","department","doctor_in","date","department_r",    "doctor_r","price", "clinical_term","district","date_r","doctor_verify","addition","bills" )
+
+all_tab_sort$order_list <- as.numeric(all_tab_sort$order_list)
+
+for (i in 1:dim(all_tab_sort)[1]){
+  if(length(xiangx_tab[xiangx_tab$order_list == all_tab_sort[i,5], ]$department) != 0){
+    all_tab_sort[i,9] <- as.character(xiangx_tab[xiangx_tab$order_list == all_tab_sort[i,5], ]$department)
+  }else{
+    all_tab_sort[i,9] <- NA
+  }
+  if(length(xiangx_tab[xiangx_tab$order_list == all_tab_sort[i,5], ]$doctor_in) != 0){
+    all_tab_sort[i,10] <- as.character(xiangx_tab[xiangx_tab$order_list == all_tab_sort[i,5], ]$doctor_in)
+  }else{
+    all_tab_sort[i,10] <- NA
+  }
+   if(length(xiangx_tab[xiangx_tab$order_list == all_tab_sort[i,5], ]$price) != 0){
+    all_tab_sort[i,11] <- as.numeric(as.character(xiangx_tab[xiangx_tab$order_list == all_tab_sort[i,5], ]$price))
+  }else{
+    all_tab_sort[i,11] <- NA
+  }
+  if(length(xiangx_tab[xiangx_tab$order_list == all_tab_sort[i,5], ]$clinical_term) != 0){
+    all_tab_sort[i,12] <- as.character(xiangx_tab[xiangx_tab$order_list == all_tab_sort[i,5], ]$clinical_term)
+  }else{
+    all_tab_sort[i,12] <- NA
+  }
+  if(length(xiangx_tab[xiangx_tab$order_list == all_tab_sort[i,5], ]$district) != 0){
+    all_tab_sort[i,13] <- as.character(xiangx_tab[xiangx_tab$order_list == all_tab_sort[i,5], ]$district)
+  }else{
+    all_tab_sort[i,13] <- NA
+  }
+  if(length(xiangx_tab[xiangx_tab$order_list == all_tab_sort[i,5], ]$date) != 0){
+    all_tab_sort[i,14] <- as.character(xiangx_tab[xiangx_tab$order_list == all_tab_sort[i,5], ]$date)
+  }else{
+    all_tab_sort[i,14] <- NA
+  }
+}
+
+  
+write.table(all_tab_sort, file = "overall.txt", sep = "\t", quote = F, row.names = F, col.names = T)
+
 
 
 
