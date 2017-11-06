@@ -1,0 +1,61 @@
+setwd("D:\\wangliang\\clinical_statistic\\October")
+
+xx_tab <- read.csv(file = "xiqu10yue.txt", sep = "\t", stringsAsFactors = F)
+
+order_list <- names(table(xx_tab$病人登记号))
+
+tianchong <- rep(NA, length(order_list))
+
+xiangx_tab <- cbind(order_list, tianchong, tianchong, tianchong, tianchong, tianchong, tianchong,tianchong, tianchong, tianchong, tianchong, tianchong, tianchong, tianchong)
+
+colnames(xiangx_tab) <- c("order_list","name" ,"gender", "age","department", "doctor_in", "price", "clinical_term", "addition", "district", "date","bingli_order", "doctor_verify", "bills")
+
+for (i in 1:length(order_list)){
+  if( length(grep("RIS", xx_tab[xx_tab$病人登记号 == order_list[i],]$病人姓名[1])) == 1){
+    xiangx_tab[i,2] <- unlist(strsplit(xx_tab[xx_tab$病人登记号 == order_list[i],]$病人姓名[1], "|", fixed = T))[2]
+  }else{
+    xiangx_tab[i,2] <- unlist(strsplit(xx_tab[xx_tab$病人登记号 == order_list[i],]$病人姓名[1], "|", fixed = T))[1]
+  }
+  xiangx_tab[i,5] <- xx_tab[xx_tab$病人登记号 == order_list[i],]$病人科室名称[1]
+  xiangx_tab[i,6] <- xx_tab[xx_tab$病人登记号 == order_list[i],]$下医嘱医生姓名[1]
+  xiangx_tab[i,7] <- sum(xx_tab[xx_tab$病人登记号 == order_list[i],]$总金额)
+  xiangx_tab[i,8] <- xx_tab[xx_tab$病人登记号 == order_list[i],]$医嘱项名称[1]
+  xiangx_tab[i,10] <- "xiqu"
+  xiangx_tab[i,11] <- xx_tab[xx_tab$病人登记号 == order_list[i],]$时间[1]
+}
+
+
+
+
+
+alk_10 <- read.csv(file = "10_alk.txt", sep = "\t", stringsAsFactors = F) 
+arms_10 <- read.csv(file = "10_arms.txt", sep = "\t", stringsAsFactors = F) 
+cx_10 <- read.csv(file = "10_cx.txt", sep = "\t", stringsAsFactors = F) 
+fish_10 <- read.csv(file = "10_fish.txt", sep = "\t", stringsAsFactors = F) 
+ngs_10 <- read.csv(file = "10_ngs.txt", sep = "\t", stringsAsFactors = F) 
+y_10 <- read.csv(file = "10_y.txt", sep = "\t", stringsAsFactors = F) 
+
+
+
+all_tab <- rbind(alk_10,arms_10,cx_10,fish_10,ngs_10,y_10)
+all_tab_sort <- all_tab[order(all_tab$住院号),]
+
+all_tab_sort <- all_tab_sort[,-6]
+
+colnames(all_tab_sort) <- c("bingli_order", "name", "gender", "age", "order_list", "department", "doctor_in", "date")
+
+write.table(all_tab_sort, file = "over_tab.txt", quote = F, row.names = F, col.names = T, sep = "\t")
+
+################################################
+## converge the two tables
+################################################
+
+tianchong <- rep(NA, dim(all_tab_sort)[1])
+
+all_tab_sort <- cbind(all_tab_sort, tianchong,tianchong,tianchong,tianchong,tianchong,tianchong,tianchong,tianchong,tianchong)
+
+colnames(all_tab_sort) <- c("bingli_order","name","gender","age","order_list","department","doctor_in","date","department_r",    "doctor_r","price", "clinical_term","district","date_r","doctor_verify","addition","bills" )
+
+
+
+
