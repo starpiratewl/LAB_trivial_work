@@ -103,6 +103,26 @@ for (i in 1:dim(all_tab_sort)[1]){
 write.table(all_tab_sort, file = "overall.txt", sep = "\t", quote = F, row.names = F, col.names = T)
 
 
+###########################################################################################################
+## verify the financial 
+###########################################################################################################
+
+setwd("D:\\wangliang\\clinical_statistic\\zhangmu_hedui")
+
+xqbl_9yue <- read.csv(file = "9yuebinglike_xiqu.txt", sep = "^", stringsAsFactors = F)
+
+bl_9yue <- read.csv(file = "9yuebinglike.txt", sep = "^", stringsAsFactors = F)
+
+
+
+
+
+
+
+
+
+
+
 
 
 
