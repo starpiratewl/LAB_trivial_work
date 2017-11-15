@@ -113,6 +113,21 @@ xqbl_9yue <- read.csv(file = "9yuebinglike_xiqu.txt", sep = "^", stringsAsFactor
 
 bl_9yue <- read.csv(file = "9yuebinglike.txt", sep = "^", stringsAsFactors = F)
 
+dim(xqbl_9yue)
+##[1] 8676   34
+dim(bl_9yue)
+##[1] 8716   34
+
+## 8716 > 8676
+## so the bl_9yue table is "bigger" than the xqbl_9yue table
+
+different_id <- setdiff(bl_9yue$病人登记号, xqbl_9yue$病人登记号)
+diff_table <- bl_9yue[bl_9yue$病人登记号 %in% different_id,]
+
+## differ_table is the difference between bl_9yue table and xqbl_9yue table
+
+
+
 
 
 
