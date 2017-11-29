@@ -1,0 +1,75 @@
+setwd("D:\\wangliang\\department_trivial\\jianyankedan")
+
+tab <- read.csv(file = "wnt_kegg.txt", sep = ";", stringsAsFactor = F, header = F)
+
+head(tab)
+V1                                                      V2
+1 PORCN  porcupine O-acyltransferase [KO:K00181] [EC:2.3.1.250]
+2  WNT1                         Wnt family member 1 [KO:K03209]
+3  WNT2                         Wnt family member 2 [KO:K00182]
+4 WNT2B                        Wnt family member 2B [KO:K00182]
+5  WNT3                         Wnt family member 3 [KO:K00312]
+6 WNT3A                        Wnt family member 3A [KO:K00312]
+
+## here we just want to extract the first gene names of the V1 column
+
+write.table(tab$V1, file = "wnt_genes.txt", col.names = F, row.names = F, quote = F)
+
+
+
+##the format of "egfr_kegg.txt' are like follows:
+##hsa:10000            K04456 RAC serine/threonine-protein kinase [EC:2.7.11.1] | (RefSeq) AKT3, MPPH, MPPH2, PKB-GAMMA, PK 
+##hsa:10018            K16341 Bcl-2-like protein 11 | (RefSeq) BCL2L11, BAM, BIM, BOD; BCL2 like 11 
+##hsa:1950             K04357 epidermal growth factor | (RefSeq) EGF, HOMG4, URG; epidermal growth factor 
+##hsa:1956             K04361 epidermal growth factor receptor [EC:2.7.10.1] | (RefSeq) EGFR, ERBB, ERBB1, HER1, NISBD2, PI 
+##hsa:1977             K03259 translation initiation factor 4E | (RefSeq) EIF4E, AUTS19, CBP, EIF4E1, EIF4EL1, EIF4F, eIF-4 
+##hsa:1978             K07205 eukaryotic translation initiation factor 4E binding protein 1 | (RefSeq) EIF4EBP1, 4E-BP1, 4E 
+##hsa:2064             K05083 receptor tyrosine-protein kinase erbB-2 [EC:2.7.10.1] | (RefSeq) ERBB2, CD340, HER-2, HER-2/n 
+##hsa:2065             K05084 receptor tyrosine-protein kinase erbB-3 [EC:2.7.10.1] | (RefSeq) ERBB3, ErbB-3, HER3, LCCS2,  
+
+## This file is arrange to view neatly, and the first 21 character (include hsa:xxxx) is set to align the format, so when we read this file we should notice this feature.
+
+tab1 <- read.fwf(file = "egfr_kegg.txt", width = c(21,300), stringsAsFactors = F, header = F)
+
+
+##
+##unlist(strsplit(unlist(strsplit(tab1$V2[1], ") "))[2], ","))[1]
+
+strsplit(tab1$V2, "Seq) ")
+
+tmp_tab <- lapply(strsplit(tab1$V2, "Seq) "), function(x){unlist(x)[2]})
+
+result_list <- lapply(tmp_tab, function(x){unlist(strsplit(x,","))[1]})
+
+resulthaha <- unlist(result_list)
+
+write.table(resulthaha, file = "egfr_genes.txt", col.names = F, row.names = F, quote = F)
+
+
+
+
+##################################
+egfr_genes <- read.csv(file = "egfr_genes.txt", sep = "\t", header = F, stringsAsFactors = F)$V1
+wnt_genes <- read.csv(file = "wnt_genes.txt", sep = "\t", header = F, stringsAsFactors = F)$V1
+
+series_list <- c(1246,1290,4454)
+
+
+
+mir1246_tab <- read.csv(file = "miR_1246.txt", sep = "\t", stringsAsFactors = F)
+mir1246_genes <- mir1246_tab[,1]
+
+mir1290_tab <- read.csv(file = "miR_1290.txt", sep = "\t", stringsAsFactors = F)
+mir1290_genes <- mir1290_tab[,1]
+
+mir4454_tab <- read.csv(file = "miR_4454.txt", sep = "\t", stringsAsFactors = F)
+mir4454_genes <- mir4454_tab[,1]
+
+
+
+for (i in 1:3){
+  write.table(intersect(eval(parse(text = paste("mir",series_list[i],"_genes", sep = ""))), egfr_genes) , file = paste(series_list[i], "_egfr.txt", sep = ""), col.names = F, row.names = F, quote = F)
+  write.table(intersect(eval(parse(text = paste("mir",series_list[i],"_genes", sep = ""))), wnt_genes) , file = paste(series_list[i], "_wnt.txt", sep = ""), col.names = F, row.names = F, quote = F)
+}
+
+
