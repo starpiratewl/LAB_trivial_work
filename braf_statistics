@@ -1,0 +1,68 @@
+setwd("D:\\wangliang\\clinical_statistic\\November\\11yue")
+
+allbraf <- read.csv(file = "braf.txt", sep = "\t", stringsAsFactors = F)
+dim(allbraf)
+##[1] 570   7
+
+table(allbraf$braf)
+##  0   1 
+##123 446 
+
+table(allbraf$病理类型)
+##      结甲       经典型       滤泡癌     滤泡亚型 柱状细胞亚型 
+##       28          518          3           20           1 
+
+###############################################################
+alltype <- table(allbraf$病理类型, allbraf$braf)
+##               0   1
+##结甲           6  22
+##经典型       108 409
+##滤泡癌         3   0
+##滤泡亚型       6  14
+##柱状细胞亚型   0   1
+
+chiseq.test(alltype, correct = FALSE)
+
+        Pearson's Chi-squared test
+
+data:  alltype
+X-squared = 12.145, df = 4, p-value = 0.0163
+
+
+###############################################################
+allsex <- table(allbraf$性别, allbraf$braf)
+chisq.test(allsex, correct = FALSE)
+
+        Pearson's Chi-squared test
+
+data:  allsex
+X-squared = 4.2113, df = 1, p-value = 0.04016
+
+
+###############################################################
+allsextype <- table(allbraf$性别, allbraf$病理类型)
+chisq.test(allsextype, correct = FALSE)
+
+        Pearson's Chi-squared test
+
+data:  allsextype
+X-squared = 3.5815, df = 4, p-value = 0.4656
+
+
+###############################################################
+aovbinli <- aov(年龄 ~ 病理类型, data = allbraf)
+summary(aovbinli)
+##             Df Sum Sq Mean Sq F value Pr(>F)
+##病理类型      4   1165   291.2   1.613  0.169
+##Residuals   565 101980   180.5
+
+
+aovbbraf <- aov(年龄 ~ braf, data = allbraf)
+summary(aovbbraf)
+##             Df Sum Sq Mean Sq F value Pr(>F)  
+##braf          1    589   589.0   3.259 0.0716 .
+##Residuals   567 102473   180.7                 
+
+
+
+
