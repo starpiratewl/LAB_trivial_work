@@ -1,0 +1,13 @@
+setwd()
+
+##  add series numbers to the table , or there is no primary key for the different records
+
+ovarian_tab <- read.csv(file = "ovarian2017.txt", sep = "\t", stringsAsFactors = F)
+
+
+grep("卵巢癌", ovarian_tab[,1])
+
+length(grep("卵巢癌", ovarian_tab[,1]))
+
+length(grep("癌", ovarian_tab[,1]))
+
