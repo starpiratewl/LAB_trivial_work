@@ -11,3 +11,10 @@ length(grep("卵巢癌", ovarian_tab[,1]))
 
 length(grep("癌", ovarian_tab[,1]))
 
+length(grep("卵巢未见", ovarian_tab[,1]))
+
+
+ovarian_filter1 <- ovarian_tab[-grep("卵巢未见", ovarian_tab[,1]),]
+
+write.table(ovarian_filter1, file = "ovarian_filter1.txt", quote = F, row.names = F, col.names = T, sep = "\t")
+
