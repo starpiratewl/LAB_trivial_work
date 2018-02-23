@@ -16,5 +16,34 @@ length(grep("卵巢未见", ovarian_tab[,1]))
 
 ovarian_filter1 <- ovarian_tab[-grep("卵巢未见", ovarian_tab[,1]),]
 
-write.table(ovarian_filter1, file = "ovarian_filter1.txt", quote = F, row.names = F, col.names = T, sep = "\t")
+##write.table(ovarian_filter1, file = "ovarian_filter1.txt", quote = F, row.names = F, col.names = T, sep = "\t")
+
+
+
+#######################################################################################################
+## adjust the filteration pattern, we can filter out the ovarian cancer from three key words
+#######################################################################################################
+
+ovarian_tab <- read.csv(file = "ovarian2017.txt", sep = "\t", stringsAsFactors = F)
+
+##gregexpr("卵巢.*未见癌累及",ovarian_tab[,1])
+
+
+jiangyelist <- gregexpr("卵巢.*浆液性",ovarian_tab[,1])
+
+jiangyeindex <- which(jiangyelist != -1)
+
+nianyelist <- gregexpr("卵巢.*粘液性",ovarian_tab[,1])
+
+nianyeindex <- which(nianyelist != -1)
+
+touminglist <- gregexpr("卵巢.*透明细胞癌",ovarian_tab[,1])
+
+toumingindex <- which(touminglist != - 1)
+
+ovarianindex <- union(toumingindex, union(jiangyeindex, nianyeindex))
+
+ovarian_cancer <- ovarian_tab[ovarianindex,]
+
+write.table(ovarian_cancer, file = "ovarian_cancer.txt", quote = F, row.names = F, col.names = T, sep = "\t")
 
