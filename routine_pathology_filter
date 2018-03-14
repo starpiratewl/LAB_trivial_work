@@ -1,0 +1,43 @@
+setwd("D:\\wangliang\\clinical_statistic\\general_hospital\\routine_pathology_general")
+
+
+o_11 <- read.csv(file = "routine_pathology_201711.txt", sep = "\t", stringsAsFactors = F)
+f_11 <- o_11[-grep("西区", o_11[,7]),]
+write.table(f_11, file = "11月总院南区.txt", quote = F, col.names = T, row.names = F,sep = "\t")
+
+
+
+o_12 <- read.csv(file = "routine_pathology_201712.txt", sep = "\t", stringsAsFactors = F)
+f_12 <- o_12[-grep("西区", o_12[,7]),]
+write.table(f_12, file = "12月总院南区.txt", quote = F, col.names = T, row.names = F, sep = "\t")
+
+
+
+o_01 <- read.csv(file = "routine_pathology_201801.txt", sep = "\t", stringsAsFactors = F)
+f_01 <- o_01[-grep("西区", o_01[,7]),]
+write.table(f_01, file = "01月总院南区.txt", quote = F, col.names = T, row.names = F,sep = "\t")
+
+
+
+o_02 <- read.csv(file = "routine_pathology_201802.txt", sep = "\t", stringsAsFactors = F)
+f_02 <- o_02[-grep("西区", o_02[,7]),]
+write.table(f_02, file = "02月总院南区.txt", quote = F, col.names = T, row.names = F,sep = "\t")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
