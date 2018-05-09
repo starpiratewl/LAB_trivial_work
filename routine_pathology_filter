@@ -25,8 +25,44 @@ write.table(f_02, file = "02月总院南区.txt", quote = F, col.names = T, row.
 
 
 
+setwd("D:\\wangliang\\clinical_statistic\\general_hospital\\2018_1234\\routine")
+
+tongji1_1 <- read.csv(file = "1_1.txt", sep = "\t", stringsAsFactors = F)
+tongji1_1_f <- tongji1_1[-grep("西区"，tongji1_1[,7]), ]
+dim(tongji1_1_f)
+
+tongji1_2 <- read.csv(file = "1_2.txt", sep = "\t", stringsAsFactors = F)
+tongji1_2_f <- tongji1_2[-grep("西区"，tongji1_2[,7]), ]
+dim(tongji1_2_f)
 
 
+tongji2 <- read.csv(file = "2.txt", sep = "\t", stringsAsFactors = F)
+tongji2_f <- tongji2[-grep("西区"，tongji2[,7]), ]
+dim(tongji2_f)
+
+
+
+tongji3_1 <- read.csv(file = "3_1.txt", sep = "\t", stringsAsFactors = F)
+tongji3_1_f <- tongji3_1[-grep("西区"，tongji3_1[,7]), ]
+dim(tongji3_1_f)
+
+
+
+tongji3_2 <- read.csv(file = "3_2.txt", sep = "\t", stringsAsFactors = F)
+tongji3_2_f <- tongji3_2[-grep("西区"，tongji3_2[,7]), ]
+dim(tongji3_2_f)
+
+
+
+tongji4_1 <- read.csv(file = "4_1.txt", sep = "\t", stringsAsFactors = F)
+tongji4_1_f <- tongji4_1[-grep("西区"，tongji4_1[,7]), ]
+dim(tongji4_1_f)
+
+
+
+tongji4_2 <- read.csv(file = "4_2.txt", sep = "\t", stringsAsFactors = F)
+tongji4_2_f <- tongji4_2[-grep("西区"，tongji4_2[,7]), ]
+dim(tongji4_2_f)
 
 
 
